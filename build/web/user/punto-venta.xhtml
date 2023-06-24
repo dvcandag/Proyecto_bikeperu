@@ -1,0 +1,321 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layouts/usuarioTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <input id="vistaPuntoVenta" type="hidden"/>
+        <div class="layout-main"> 
+            <div class="layout-content">
+                <div class="grid">
+                    <div class="col-12 md:col-9"> 
+                        <div class="card">
+                            <h5>DATOS - VENTA</h5>
+                            <h:form id="formBusqueda">
+                                <div class="ui-fluid formgrid grid">
+                                    <div class="field col-12 md:col-10 mb-1"> 
+                                        <p:growl id="msgBusqueda" showDetail="true" life="5000"/>
+                                        <div class="field col-12 md:col-7 mb-1">
+                                            <p:outputLabel class="ui-outputlabel ui-widget" for="txtTipoComprobante" value="Tipo de Comprobante"/>
+                                            <p:selectOneRadio value="#{consultaRucBean.consulta.tipoConsulta}" id="txtTipoComprobante" required="true"> 
+                                                <f:selectItems 
+                                                    value="#{tipoComprobanteBean.listarComprobantes}" var="comprobantes" 
+                                                    itemValue="#{comprobantes.codigo}" 
+                                                    itemLabel="#{comprobantes.nombre}" />
+                                                <p:ajax event="change" 
+                                                        listener="#{consultaRucBean.cambiarTipodocumento()}" 
+                                                        update="txtTipoDocumento txtDocumento :formDataVentaCliente"/>
+                                            </p:selectOneRadio>
+                                        </div>
+                                        <div class="field col-12 md:col-12 mb-1">
+                                            <p:inputText  value="#{consultaRucBean.cliente.tipo}" id="txtTipoDocumento" style="display: none"/>
+                                            <p:outputLabel for="txtDocumento" class="ui-outputlabel ui-widget" value="DNI / RUC"/>
+                                            <div class="ui-inputgroup"> 
+                                                <p:inputText 
+                                                    id="txtDocumento" 
+                                                    style="max-width: 18rem; width: 15rem;"
+                                                    value="#{consultaRucBean.consulta.numero}" 
+                                                    label="documento"
+                                                    required="true">
+                                                    <f:validateLength maximum="#{consultaRucBean.minChar}" minimum="#{consultaRucBean.minChar}"/>
+                                                    <p:keyFilter mask="num" />
+                                                    <p:ajax update="msgTipo" event="keyup" />
+                                                </p:inputText> 
+                                                <p:commandButton 
+                                                    icon="pi pi-search" 
+                                                    actionListener="#{consultaRucBean.buscarPersona()}"
+                                                    iconPos="right" value="Consultar" 
+                                                    update="msgBusqueda :formDataVentaCliente"  />
+                                                <p:message for="txtDocumento"  id="msgTipo" />
+                                            </div> 
+                                        </div>
+
+                                    </div>  
+
+                                    <div class="field col-12 md:col-2 mb-1">
+                                        <label class="ui-outputlabel ui-widget" for="txtSecuenciaTemporal">Secuencia Temporal</label>
+                                        <p:inputText 
+                                            placeholder="1" 
+                                            style="border: none" 
+                                            readonly="true" 
+                                            id="txtSecuenciaTemporal"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"/>
+                                    </div>
+
+
+                                </div>
+                            </h:form>
+                            <h:form id="formDataVentaCliente">
+                                <div class="ui-fluid formgrid grid">
+
+                                    <p:inputText id="rucConsultado" style="display: none" value="#{consultaRucBean.cliente.documento}"
+                                                 class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"/>
+                                    <div class="field col-12 md:col-12">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="razonSocial" value="Razón Social"/>
+                                        <p:inputText placeholder="Razon social" id="razonSocial" value="#{consultaRucBean.cliente.razonSocial}"
+                                                     class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                                                     required="false"/>
+                                    </div>
+                                </div>
+                            </h:form>
+                            <h:form id="formDataVentaDatos">
+                                <div class="ui-fluid formgrid grid">
+                                    <div class="field col-12 md:col-4">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="idCategoria" value="Categoria"/>
+                                        <p:selectOneMenu id="idCategoria"  filter="true" filterMatchMode="startsWith" required="false">
+                                            <f:selectItem itemLabel="Seleccionar" noSelectionOption="true" itemValue="" />
+                                            <f:selectItems value="#{categoriaBean.listarCategorias}" var="categorias" 
+                                                           itemValue="#{categorias.id}" itemLabel="#{categorias.nombre}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <div class="field col-12 md:col-4">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="idMarca" value="Marca"/>
+                                        <p:selectOneMenu id="idMarca"  filter="true" filterMatchMode="startsWith" required="false">
+                                            <f:selectItem itemLabel="Seleccionar" noSelectionOption="true" itemValue="" />
+                                            <f:selectItems 
+                                                value="#{marcaBean.listarMarcas}" var="marcas" 
+                                                itemValue="#{marcas.id}" itemLabel="#{marcas.nombre}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+
+                                    <div class="field col-12 md:col-4">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="nro_serie" value="Nro. Serie/Descripción"/>
+                                        <div class="ui-inputgroup">
+                                            <p:inputText 
+                                                placeholder="XXXXXXXXXXXXXX" 
+                                                class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" 
+                                                id="nro_serie"  
+                                                value="#{puntoventaBean.txtBuscar}"
+                                                />
+                                            <p:commandButton 
+                                                icon="pi pi-search" 
+                                                iconPos="right" 
+                                                styleClass="ui-button-info"
+                                                actionListener="#{puntoventaBean.buscarProducto()}" 
+                                                oncomplete="PF('dialogoAgregar').show();" 
+                                                update=":formAgregarNuevo"
+                                                />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="field col-12 md:col-10">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="txtDescripcionProducto" value="Descripción producto"/>
+                                        <p:inputText  value="#{puntoventaBean.producto.descripcion}"
+                                                      placeholder="Descripción producto" 
+                                                      id="txtDescripcionProducto" >
+                                            <f:validateLength minimum="3"/>
+                                        </p:inputText>  
+                                    </div>
+
+                                    <div class="field col-12 md:col-2">
+                                        <p:outputLabel class="ui-outputlabel ui-widget" for="txtPrecioReferencial" value="Precio referencial"/>
+                                        <p:inputText placeholder="1.00" id="txtPrecioReferencial" 
+                                                     class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" >
+                                            <p:keyFilter mask="num" />
+                                        </p:inputText>
+                                    </div> 
+
+
+                                </div>
+                            </h:form>
+
+                        </div> 
+                    </div>
+                    <div class="col-12 md:col-3">
+                        <div class="card ui-fluid">
+                            <h5>IMPORTE DE VENTA</h5>
+                            <p:divider />
+                            <h:form >
+                                <div class="field grid">
+                                    <label class="ui-outputlabel ui-widget col-12 mb-2 md:col-5 mb-md-0" for="txtSubTotal">Sub Total</label>
+                                    <div class="col-12 md:col-7">
+                                        <h:inputText 
+                                            readonly="true" 
+                                            id="txtSubTotal" 
+                                            value="#{puntoventaBean.ventaCabecera.impSubTotal.toString()}"
+                                            style="border: none; text-align: right;"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                    </div>
+                                </div>
+                                <div class="field grid">
+                                    <label class="ui-outputlabel ui-widget col-12 mb-2 md:col-5 mb-md-0" for="txtIgv">Igv</label>
+                                    <div class="col-12 md:col-7">
+                                        <h:inputText 
+                                            readonly="true" id="txtIgv" 
+                                            value="#{puntoventaBean.ventaCabecera.imgIgv.toString()}"
+                                            style="border: none; text-align: right;"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                    </div>
+                                </div>
+                                <div class="field grid">
+                                    <label class="ui-outputlabel ui-widget col-12 mb-2 md:col-5 mb-md-0" 
+                                           for="txtImporteTotal">Importe Total</label>
+                                    <div class="col-12 md:col-7">
+                                        <h:inputText 
+                                            
+                                            readonly="true" id="txtImporteTotal" 
+                                            value="#{puntoventaBean.ventaCabecera.impTotal.toString()}"
+                                            style="border: none; text-align: right;"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" >
+                                            <f:convertNumber  type="currency" currencySymbol="S/ " minIntegerDigits="2"/>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+
+                            </h:form>
+                            
+                            <h:form>
+                                <p:button value="Generar Venta" styleClass="ui-button-raised ui-button-secondary" />
+                            </h:form>
+                        </div>
+                    </div>
+                     
+
+                    <div class="col-12">
+                        <div class="card">
+                            <h5>Detalles Venta</h5>
+                            <h:form id="formDetalle">
+                                <p:dataTable 
+                                    id="tblDetalle"
+                                    value="#{puntoventaBean.listaDetalle}" 
+                                    size="small" var="carritos" showGridlines="true"  style="width: 100% !important; font-size: 10px"
+                                    emptyMessage="Registro no se ha encontrado"  
+                                    scrollHeight="350"
+                                    >
+                                    <p:column headerText="#" width="3" style="text-align: right; font-size: 14px">
+                                        <h:outputText value="#{carritos[0].id.secuencia}" />
+                                    </p:column>
+                                    <p:column headerText="Item" width="5" style="text-align: right; font-size: 14px">
+                                        <h:outputText value="#{carritos[0].id.item}" />
+                                    </p:column>
+                                    <p:column headerText="Producto" width="150" style="font-size: 14px">
+                                        <h:outputText value="#{carritos[0].productoserie.producto.descripcion}" />
+                                    </p:column>
+                                    <p:column headerText="Nro. Serie" width="50" style="text-align: center; font-size: 14px">
+                                        <h:outputText value="#{carritos[0].productoserie.nroSerie}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cantidad" width="20" style="text-align: right; font-size: 14px">
+                                        <h:outputText value="1" />
+                                    </p:column>
+
+                                    <p:column headerText="P. Unit" width="20" style="text-align: right; font-size: 14px">
+                                        <h:outputText value="#{carritos[0].precioVenta}" >
+                                            <f:convertNumber type="currency" currencySymbol="S/ " minIntegerDigits="2"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="OPC" width="15" style="font-size: 12px; text-align: center;"> 
+                                        <p:commandButton 
+                                            icon="pi pi-trash" 
+                                            styleClass="rounded-button ui-button-danger mr-2" 
+                                            title="Eliminar"   
+                                            >
+                                            <f:setPropertyActionListener target="#{puntoventaBean.objCarrito}" value="#{pventas}" />
+                                        </p:commandButton> 
+                                    </p:column> 
+
+
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <p:dialog header="Modal Dialog" id="dialogoNuevoProducto" widgetVar="dialogoAgregar" modal="true" height="500">
+            <h:form id="formAgregarNuevo" >
+
+                <p:dataTable 
+                    value="#{puntoventaBean.listarProductoAgregar}" 
+                    size="small" var="pventas" showGridlines="true"  style="width: 1000px !important"
+                    emptyMessage="Registro no se ha encontrado"  
+                    scrollHeight="350"
+                    > 
+                    <p:column headerText="Cód." width="50" style="font-size: 12px">
+                        <h:outputText value="#{pventas[0].codpro}"/>
+                    </p:column> 
+                    <p:column headerText="Descripción" width="350" style="font-size: 12px">
+                        <h:outputText value="#{pventas[0].descripcion}"/>
+                    </p:column> 
+
+                    <p:column headerText="Serie" style="font-size: 12px">
+                        <h:outputText value="#{pventas[3].nroSerie}"/>
+                    </p:column> 
+
+                    <p:column headerText="Categoria" style="font-size: 12px">
+                        <h:outputText value="#{pventas[1].nombre}"/>
+                    </p:column> 
+                    <p:column headerText="Marca" style="font-size: 12px">
+                        <h:outputText value="#{pventas[2].nombre}"/>
+                    </p:column> 
+
+                    <p:column headerText="OPC" style="font-size: 12px; text-align: center;"> 
+                        <p:commandButton 
+                            icon="pi pi-plus" 
+                            styleClass="rounded-button ui-button-primary mr-2" 
+                            title="Agregar"  
+                            update=":formDetalle:tblDetalle"
+                            actionListener="#{puntoventaBean.agregarCarrito()}"
+                            >
+                            <f:setPropertyActionListener target="#{puntoventaBean.objCarrito}" value="#{pventas}" />
+                        </p:commandButton> 
+                    </p:column> 
+
+
+                </p:dataTable>
+            </h:form>
+        </p:dialog>  
+
+        <h:form id="formAgregarConfirm">
+            <p:dialog id="dlgConfirmarAdd" header="Agregar Producto"  widgetVar="dialogoConfirmarAdd" resizable="false"
+                      showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="¿Estas seguro de agregar el producto al carrito?" />
+                <p:divider/>
+                <div style="text-align: center; margin: 0 auto;">
+                    <p:commandButton 
+                        value="Si" 
+                        actionListener="#{puntoventaBean.agregarCarrito()}"
+                        update=":formDetalle:tblDetalle" 
+                        styleClass="mr-2 ui-button-success"
+                        icon="pi pi-check"
+                        oncomplete="PF('dialogoConfirmarAdd').hide();" />  
+                    <p:commandButton styleClass="ui-button-danger" icon="pi pi-times" value="No" onclick="PF('dialogoConfirmarAdd').hide();" />
+                </div>
+            </p:dialog>
+        </h:form>
+
+
+
+    </ui:define>
+</ui:composition>

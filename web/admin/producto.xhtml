@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../layouts/adminTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <input id="vistaProducto" type="hidden"/>
+        <div class="layout-main"> 
+            <div class="layout-content">
+                <div class="grid">
+                    <div class="col">
+                        <h4>Mantenimiento de producto</h4>  
+                    </div>
+                </div>
+
+
+                <div class="grid">
+                    <div class="col-12 md:col-7"> 
+                        <div class="card"> 
+                            <div class="ui-panel ui-widget ui-widget-content ui-corner-all">
+                                <div class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+                                    <span class="ui-panel-title">Descripciones y detalles</span> 
+                                </div>
+                                <div class="ui-panel-content ui-widget-content">
+
+
+                                    <h:form id="formProducto">
+
+                                        <div class="ui-fluid formgrid grid">
+
+                                            <div class="field col-12 md:col-8">
+                                                <p:inputText type="hidden" value="#{productoBean.producto.codpro}"/>
+                                                <div class="field col-12 md:col-12">
+                                                    <p:outputLabel for="txtDescripcion" value="Descripción: "/>
+                                                    <p:inputText 
+                                                        id="txtDescripcion"
+                                                        required="true"
+                                                        class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                                                        value="#{productoBean.producto.descripcion}"
+                                                        /> 
+                                                </div>
+                                                <div class="field col-12 md:col-12">
+                                                    <p:outputLabel for="txtCategorias" value="Categorias: "/>
+                                                    <p:selectOneMenu style="width: 100% !important" id="txtCategorias" required="true" 
+                                                                     value="#{productoBean.categoria.id}"
+                                                                     class=""> 
+                                                        <f:selectItem 
+                                                            itemValue="" 
+                                                            itemLabel="--Seleccionar--" 
+                                                            noSelectionOption="true"/>
+                                                        <f:selectItems 
+                                                            value="#{productoBean.listaCategorias}" 
+                                                            var="categorias" 
+                                                            itemValue="#{categorias.id}" 
+                                                            itemLabel="#{categorias.descripcion}" />
+                                                    </p:selectOneMenu>
+                                                </div>
+
+                                                <div class="field col-12 md:col-12">
+                                                    <p:outputLabel for="txtCargas" value="Marcas: "/>
+                                                    <p:selectOneMenu 
+                                                        style="width: 100% !important"
+                                                        id="txtCargas" 
+                                                        required="true" 
+                                                        value="#{productoBean.marca.id}"> 
+                                                        <f:selectItem itemValue="" itemLabel="--Seleccionar--" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{productoBean.listaMarcas}" var="marcas" 
+                                                                       itemValue="#{marcas.id}" itemLabel="#{marcas.descripcion}" />
+                                                    </p:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <div class="field col-12 md:col-4">
+                                                <p:outputLabel for="txtEspecificacion" value="Especificaciones: "/>
+                                                <p:inputTextarea id="txtEspecificacion" rows="9" cols="20" required="true" value="#{productoBean.producto.especificacion}"/>
+                                            </div>
+
+                                            <div class="field col-12 md:col-12 mb-0" style="text-align: right">
+                                                <p:commandButton id="btnSubmit" style="width: auto" 
+                                                                 value="Guardar Temporal" 
+                                                                 actionListener="#{productoBean.guardaProducto()}"
+                                                                 update=":formDataProducto formProducto msgRegistrarProducto"  
+                                                                 icon="pi pi-save" styleClass="rounded-button ui-button-secondary" iconPos="right" />
+                                                <p:growl id="msgRegistrarProducto" showDetail="true" life="5000" showSummary="true" sticky="false" />
+                                            </div>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-5">
+                        <div class="card"> 
+                            <div class="ui-panel ui-widget ui-widget-content ui-corner-all">
+                                <div class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+                                    <div class="ui-fluid formgrid grid">
+                                        <div class="col-6">
+
+                                            <span class="ui-panel-title">Series del producto</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <h:form>
+                                                <p:commandButton 
+                                                    value="Agregar" icon="pi pi-plus" 
+                                                    actionListener="#{productoBean.nuevaSerieProducto()}"
+                                                    update=":mdlProductoSerie:manage-product-content" 
+                                                    oncomplete="PF('manageProductDialog').show()"
+                                                    styleClass="ui-button-success mb-0" 
+                                                    style="margin-right: .5rem; float: right; width: auto;">
+                                                    <p:resetInput target=":mdlProductoSerie:manage-product-content" />
+                                                </p:commandButton>
+                                            </h:form>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                                <div class="ui-panel-content ui-widget-content">
+                                    <h:form id="formTblProductoSerie">  
+                                        <p:growl id="msgTableEditable" showDetail="true"/>
+                                        <p:dataTable 
+                                            value="#{productoBean.listarProductoseries}" 
+                                            var="pseries"
+                                            id="tblProductoserie" 
+                                            showGridlines="true"
+                                            scrollable="true" 
+                                            scrollHeight="200"
+                                            editable="true"
+                                            rowKey="#{pseries[0].id}" 
+                                            style="margin-bottom:20px; font-size: 10px; text-align: center;"
+                                            size="small" 
+                                            stripedRows="true"
+                                            >
+
+                                            <p:ajax event="rowEditCancel" 
+                                                    listener="#{productoBean.onRowCancel}" 
+                                                    update=":formTblProductoSerie:msgTableEditable"
+                                                    /> 
+                                            <p:ajax event="rowEdit" listener="#{productoBean.onRowEdit}" 
+                                                    update=":formTblProductoSerie:msgTableEditable"/>
+
+
+                                            <p:column headerText="id" style="width: 5%; text-align: center;font-size: 12px">
+                                                <h:outputText value="#{pseries.id}"/>
+                                            </p:column>
+                                            <p:column visible="false"  headerText="Prod." style="width: 10%; text-align: center;font-size: 12px">
+                                                <h:outputText value="#{pseries.producto.codpro}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Estado" style="width: 5%; text-align: center;font-size: 12px">
+                                                <h:outputText value="#{pseries.estado}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Disponible" style="width: 5%; text-align: center;font-size: 12px">
+                                                <h:outputText value="#{pseries.disponible}"/>
+                                            </p:column>
+
+                                            <p:column headerText="Serie" style="font-size: 12px">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{pseries.nroSerie}"/>
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <p:inputText label="Serie" value="#{pseries.nroSerie}" style="width:100%"/>
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column headerText="Precio" style="font-size: 12px">
+                                                <p:cellEditor>
+                                                    <f:facet name="output">
+                                                        <h:outputText value="#{pseries.precioCompra}">
+                                                            <f:convertNumber type="currency" currencySymbol="S/ "/>
+                                                        </h:outputText>
+                                                    </f:facet>
+                                                    <f:facet name="input">
+                                                        <p:inputNumber 
+                                                            label="Precio"
+                                                            value="#{pseries.precioCompra}" 
+                                                            style="width:100%" 
+                                                            symbol=" PEN"
+                                                            symbolPosition="s" 
+                                                            decimalSeparator="." 
+                                                            thousandSeparator="," 
+                                                            required="true" 
+                                                            decimalPlaces="2"/>
+                                                    </f:facet>
+                                                </p:cellEditor>
+                                            </p:column>
+
+                                            <p:column headerText="OPC" style="width:140px; text-align: center; 
+                                                      font-size: 12px;display: inline-flex;">
+                                                <p:commandButton 
+                                                    icon="pi pi-trash" 
+                                                    styleClass="rounded-button ui-button-danger ui-button-flat" title="Eliminar" 
+                                                    oncomplete="PF('dialogoEliminar').show();"
+                                                    update=":formEliminar"> 
+                                                    <f:setPropertyActionListener target="#{productoBean.productoserie}" value="#{pseries}" />
+                                                </p:commandButton> 
+                                                <p:rowEditor 
+                                                    style="width: 60% !important;"
+                                                    editTitle="Editar registro" 
+                                                    cancelTitle="Cancelar editar" 
+                                                    saveTitle="Guardar registro"/>
+
+
+
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </h:form>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h:form id="formEliminar">
+                    <p:dialog id="dlgEliminar" header="Eliminar Registro"  widgetVar="dialogoEliminar" resizable="false"
+                              showEffect="fade" hideEffect="explode" modal="true">
+                        <h:outputText value="¿Estas seguro de eliminar el registro?" />
+                        <p:divider/>
+                        <div style="text-align: center; margin: 0 auto;">
+                            <p:commandButton value="Si" 
+                                             actionListener="#{productoBean.eliminarFilaserie()}"
+                                             update=":formTblProductoSerie" 
+                                             styleClass="mr-2 ui-button-success"
+                                             icon="pi pi-check"
+                                             oncomplete="PF('dialogoEliminar').hide();" />
+                            <p:commandButton styleClass="ui-button-danger" icon="pi pi-times" value="No" onclick="PF('dialogoEliminar').hide();" />
+                        </div>
+                    </p:dialog>
+                </h:form>
+
+
+                <div class="grid">
+                    <div class="col">
+                        <div class="card">
+                            <div class="ui-fluid formgrid grid"> 
+                                <div class="field col-12 md:col-6">
+                                    <h4>Listado de producto</h4>
+                                </div>
+                                <div class="field col-12 md:col-6"> 
+
+                                    <h:form id="formGuardar">
+                                        <p:commandButton 
+                                            value="Agregar" icon="pi pi-plus" 
+                                            actionListener="#{productoBean.guardarProductoFinal()}" 
+                                            styleClass="ui-button-success mb-0" 
+                                            update=":formDataProducto :formProducto"
+                                            style="margin-right: .5rem; float: right; width: auto;"> 
+                                        </p:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                            <h:form id="formDataProducto"> 
+                                <p:dataTable 
+                                    id="tblProductos" 
+                                    value="#{productoBean.listarProductos}" 
+                                    var="productos" 
+                                    showGridlines="true"
+                                    rows="10"
+                                    rowKey="#{productos.codpro}"
+                                    paginator="true"  
+                                    paginatorPosition="bottom" 
+                                    filterBy="#{productos.codpro}"
+                                    
+                                    currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" >
+                                    >
+                                    <p:column headerText="Código" style="font-size: 12px; width: 3%">
+                                        <h:outputText value="#{productos[0].codpro}"/>
+                                    </p:column>
+                                    <p:column headerText="Descripcion" style="font-size: 12px; width: 33%">
+                                        <h:outputText value="#{productos[0].descripcion}"/>
+                                    </p:column>
+                                    <p:column headerText="Especificaciones" style="font-size: 12px; width: 33%">
+                                        <h:outputText value="#{productos[0].especificacion}"/>
+                                    </p:column>
+                                    <p:column headerText="Categoria" style="font-size: 12px; width: 7%">
+                                        <h:outputText value="#{productos[0].categoria.nombre}"/>
+                                    </p:column>
+                                    
+                                    <p:column headerText="Marca" style="font-size: 12px; width: 7%">
+                                        <h:outputText value="#{productos[0].marca.nombre}"/>
+                                    </p:column>
+                                    
+
+                                    <p:column headerText="Precio" style="font-size: 12px; width: 10%; text-align: center">
+                                        <h:outputText value="#{productos[0].precioCompra}">
+                                            <f:convertNumber type="currency" locale="es-PE"  currencySymbol="S/. "  minFractionDigits="2"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Estado" style="font-size: 12px; width: 5%; text-align: center">
+                                        <h:outputText value="#{(productos[0].estado == 'S')?'Activo':((productos[0].estado == 'P')) ? 'Pendiente' : 'Inactivo'}"/>
+                                    </p:column>
+                                    <p:column headerText="OPC" style="width: 7%; text-align: center;">
+                                        <p:commandButton type="button" icon="pi pi-times" title="Desactivar producto" 
+                                                         styleClass="rounded-button ui-button-danger mr-2" />
+                                        <p:commandButton type="button" icon="pi pi-question" title="Mostrar series producto" 
+                                                         styleClass="rounded-button ui-button-info" />
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h:form id="mdlProductoSerie">
+            <p:dialog header="Producto Serie" showEffect="fade" modal="true" 
+                      widgetVar="manageProductDialog"
+                      responsive="true">
+                <p:growl id="msgValidacionSerie" showDetail="true" life="5000"/>
+                <p:outputPanel id="manage-product-content" class="ui-fluid">
+                    <div class="field">
+                        <p:outputLabel for="NroSerie">Nueva Serie</p:outputLabel>
+                        <p:inputText id="NroSerie" validatorMessage="El campo es requerido" 
+                                     label="número serie" value="#{productoBean.productoserie.nroSerie}" required="true" />
+                    </div> 
+                    <div class="field">
+                        <p:outputLabel for="price">Precio de Compra</p:outputLabel>
+                        <p:inputNumber id="price" validatorMessage="El campo es requerido" label="precio compra" 
+                                       value="#{productoBean.productoserie.precioCompra}" symbol=" PEN"
+                                       symbolPosition="s" decimalSeparator="." thousandSeparator="," required="true" decimalPlaces="2"/>
+                    </div> 
+                    <p:commandButton 
+                        type="submit" 
+                        icon="pi pi-save" 
+                        title="Agregar nueva serie" iconPos="right" value="Agregar" 
+                        actionListener="#{productoBean.agregarProductoSerie()}"
+                        oncomplete="if(!args.validationFailed) PF('manageProductDialog').hide();" 
+                        update="msgValidacionSerie :formTblProductoSerie"
+                        styleClass="rounded-button ui-button-info"/>
+                </p:outputPanel>
+
+            </p:dialog>
+        </h:form> 
+
+
+
+    </ui:define>
+
+</ui:composition>

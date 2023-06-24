@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jun-2023 8:30:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entidad.Producto" table="producto" catalog="proyecto_uni" optimistic-lock="version">
+        <id name="codpro" type="string">
+            <column name="Codpro" length="6" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="categoria" class="com.entidad.Categoria" fetch="select">
+            <column name="IdCategoria" />
+        </many-to-one>
+        <many-to-one name="marca" class="com.entidad.Marca" fetch="select">
+            <column name="IdMarca" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="Descripcion" />
+        </property>
+        <property name="especificacion" type="string">
+            <column name="Especificacion" length="500" />
+        </property>
+        <property name="precioCompra" type="big_decimal">
+            <column name="PrecioCompra" precision="18" scale="4" />
+        </property>
+        <property name="imagen" type="string">
+            <column name="Imagen" length="500" />
+        </property>
+        <property name="fechaCreado" type="timestamp">
+            <column name="FechaCreado" length="19" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" not-null="true" />
+        </property>
+        <set name="productoseries" table="productoserie" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Codpro" length="6" />
+            </key>
+            <one-to-many class="com.entidad.Productoserie" />
+        </set>
+    </class>
+</hibernate-mapping>

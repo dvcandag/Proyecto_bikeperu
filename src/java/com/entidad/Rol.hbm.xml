@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jun-2023 8:30:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entidad.Rol" table="rol" catalog="proyecto_uni" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="Id" />
+            <generator class="identity" />
+        </id>
+        <property name="nombreRol" type="string">
+            <column name="NombreRol" length="45" />
+        </property>
+        <property name="flgEstado" type="string">
+            <column name="FlgEstado" length="2" not-null="true" />
+        </property>
+        <property name="tipRol" type="string">
+            <column name="TipRol" length="2" not-null="true" />
+        </property>
+        <property name="leer" type="int">
+            <column name="Leer" not-null="true" />
+        </property>
+        <property name="agregar" type="int">
+            <column name="Agregar" not-null="true" />
+        </property>
+        <property name="editar" type="int">
+            <column name="Editar" not-null="true" />
+        </property>
+        <property name="eliminar" type="int">
+            <column name="Eliminar" not-null="true" />
+        </property>
+        <property name="facturar" type="int">
+            <column name="Facturar" not-null="true" />
+        </property>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IdRol" />
+            </key>
+            <one-to-many class="com.entidad.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>

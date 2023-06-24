@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proyecto_uni?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">airtemp</property>
+    <property name="hibernate.connection.password">Rojas2021:%</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="com/entidad/Rol.hbm.xml"/>
+    <mapping resource="com/entidad/Tipodocumentoidentidad.hbm.xml"/>
+    <mapping resource="com/entidad/Kardexventas.hbm.xml"/>
+    <mapping resource="com/entidad/Categoria.hbm.xml"/>
+    <mapping resource="com/entidad/Usuarioserie.hbm.xml"/>
+    <mapping resource="com/entidad/VentaCabecera.hbm.xml"/>
+    <mapping resource="com/entidad/Usuariorole.hbm.xml"/>
+    <mapping resource="com/entidad/Cliente.hbm.xml"/>
+    <mapping resource="com/entidad/VentaCabeceraTemp.hbm.xml"/>
+    <mapping resource="com/entidad/MantenimientoPrecio.hbm.xml"/>
+    <mapping resource="com/entidad/Productoserie.hbm.xml"/>
+    <mapping resource="com/entidad/Producto.hbm.xml"/>
+    <mapping resource="com/entidad/VentaDetalleTemp.hbm.xml"/>
+    <mapping resource="com/entidad/Tipocomprobante.hbm.xml"/>
+    <mapping resource="com/entidad/Consultarucdni.hbm.xml"/>
+    <mapping resource="com/entidad/Paginausuario.hbm.xml"/>
+    <mapping resource="com/entidad/Pagina.hbm.xml"/>
+    <mapping resource="com/entidad/Proveedor.hbm.xml"/>
+    <mapping resource="com/entidad/Usuario.hbm.xml"/>
+    <mapping resource="com/entidad/Marca.hbm.xml"/>
+    <mapping resource="com/entidad/Tipomovimiento.hbm.xml"/>
+    <mapping resource="com/entidad/VentaDetalle.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

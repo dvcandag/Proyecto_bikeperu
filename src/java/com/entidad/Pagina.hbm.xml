@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jun-2023 8:30:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entidad.Pagina" table="pagina" catalog="proyecto_uni" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="Id" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" />
+        </property>
+        <property name="url" type="string">
+            <column name="url" length="100" />
+        </property>
+        <property name="idPadre" type="string">
+            <column name="idPadre" length="4" not-null="true" />
+        </property>
+        <property name="icono" type="string">
+            <column name="Icono" length="45" />
+        </property>
+        <property name="orden" type="java.lang.Integer">
+            <column name="Orden" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

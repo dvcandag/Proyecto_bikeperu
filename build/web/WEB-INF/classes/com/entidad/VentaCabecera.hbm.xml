@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jun-2023 8:30:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entidad.VentaCabecera" table="venta_cabecera" catalog="proyecto_uni" optimistic-lock="version">
+        <id name="secuencia" type="int">
+            <column name="secuencia" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cliente" class="com.entidad.Cliente" fetch="select">
+            <column name="IdCliente" />
+        </many-to-one>
+        <property name="tipoComprobante" type="java.lang.Integer">
+            <column name="TipoComprobante" />
+        </property>
+        <property name="serieDoc" type="string">
+            <column name="Serie_doc" length="4" />
+        </property>
+        <property name="numeroDoc" type="string">
+            <column name="Numero_doc" length="8" />
+        </property>
+        <property name="impTotal" type="big_decimal">
+            <column name="ImpTotal" precision="18" scale="3" />
+        </property>
+        <property name="imgIgv" type="big_decimal">
+            <column name="ImgIgv" precision="18" scale="3" />
+        </property>
+        <property name="impSubTotal" type="big_decimal">
+            <column name="ImpSubTotal" precision="18" scale="3" />
+        </property>
+        <property name="flgEstado" type="string">
+            <column name="FlgEstado" length="1" not-null="true" />
+        </property>
+        <property name="flgActivo" type="string">
+            <column name="FlgActivo" length="2" not-null="true" />
+        </property>
+        <property name="fecRegistro" type="timestamp">
+            <column name="FecRegistro" length="19" not-null="true" />
+        </property>
+        <property name="fecEntrega" type="timestamp">
+            <column name="FecEntrega" length="19" />
+        </property>
+        <set name="ventaDetalles" table="venta_detalle" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="secuencia" not-null="true" />
+            </key>
+            <one-to-many class="com.entidad.VentaDetalle" />
+        </set>
+    </class>
+</hibernate-mapping>

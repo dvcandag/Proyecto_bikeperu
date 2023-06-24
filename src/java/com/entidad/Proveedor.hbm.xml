@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15-jun-2023 8:30:38 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entidad.Proveedor" table="proveedor" catalog="proyecto_uni" optimistic-lock="version">
+        <id name="idProveedor" type="int">
+            <column name="idProveedor" />
+            <generator class="assigned" />
+        </id>
+        <property name="rucprv" type="string">
+            <column name="Rucprv" length="11" not-null="true" />
+        </property>
+        <property name="razonSocial" type="string">
+            <column name="RazonSocial" not-null="true" />
+        </property>
+        <property name="estado" type="string">
+            <column name="Estado" length="1" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

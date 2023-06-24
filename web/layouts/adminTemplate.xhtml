@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/proyecto_univesidad/app/javax.faces.resource/./images/favicon.ico"/> 
+        <f:event type="preRenderView" listener="#{seguridadBean.verificarSesion()}" />
+        <h:outputStylesheet name="./theme.css"/>
+        <h:outputStylesheet name="./primeicons/primeicons.css"/>
+        <h:outputStylesheet name="./components.css"/>
+        <h:outputStylesheet name="./css/primeicons.css"/>
+        <h:outputStylesheet name="./css/primeflex.css"/>
+        <h:outputStylesheet name="./css/layout-cyan-light.css"/>
+        <h:outputStylesheet name="./css/demo-light.css"/> 
+        <h:outputScript name="./js/jquery/jquery.js" />
+        <h:outputScript name="./js/core.js"/>
+        <h:outputScript name="./js/components.js"/> 
+        <h:outputScript name="./js/jquery/jquery-plugins.js"/>  
+        <h:outputScript name="./js/touchswipe.js" />
+        <h:outputScript name="./js/layout.js"/>
+        <h:outputScript name="./js/prism.js"/>
+        <h:outputScript name="./sections.js"/>    
+        <h:outputScript name="./js/clientes.js"/>    
+        <h:outputScript name="./KeyFilter/keyfilter.js"/>     
+        <h:outputScript name="./js/puntoventa.js"/>
+        <title>BIKEPERU</title>
+        <style>
+            .row-pendiente {
+                background-color: #ff8f8f9e !important;
+                background-image: none !important;
+                color: #000 !important;
+            }
+        </style>
+
+    </h:head>
+ 
+    <h:body>
+        <div class="layout-wrapper layout-topbar-colored layout-menu-dim layout-static layout-static-active">
+            <div id="top" class="top"> 
+                <ui:insert name="top"></ui:insert>
+
+                <div class="layout-topbar">
+                    <div class="layout-topbar-wrapper">
+                        <div class="layout-topbar-left">
+                            <a id="logolink" name="logolink" href="administrador.xhtml" class="layout-topbar-logo"> 
+                                <img id="j_idt13" src="/proyecto_univesidad_copia/app/javax.faces.resource/./images/logokp.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="layout-topbar-right">
+                            <div class="menu-button-wrapper">
+                                <a href="#" class="menu-button">
+                                    <div class="menu-button-bars">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <div class="menu-button-times">
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <ul class="layout-topbar-actions"> 
+
+                                <li class="topbar-item user-profile">
+                                    <a href="#">
+                                        <img id="j_idt32" src="/proyecto_univesidad_copia/app/javax.faces.resource/./images/avatar-profilemenu.png" alt="" />
+                                    </a>
+                                    <ul>  
+                                        <li>
+                                            <h:form style="width: 100% !important; padding: 0; margin: 0">
+                                                <p:commandButton style="width: 100%; padding: 0; margin: 0; text-align: center"
+                                                                 styleClass="ui-button-primary ui-button-flat"
+                                                                 icon="pi pi-sign-out" 
+                                                                 iconPos="right" 
+                                                                 actionListener="#{seguridadBean.cerrarSesion()}" 
+                                                                 value="Cerrar Sesión" action="login.xhtml?faces-redirect=true"/>
+                                            </h:form>
+                                        </li> 
+                                    </ul>
+                                </li>
+
+                            </ul> 
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div>
+                <div id="left">
+                    <ui:insert name="left"></ui:insert>
+                    <div class="menu-wrapper">
+                        <div class="layout-menu-container">
+
+
+                            <h:form> 
+                                <p:menu toggleable="true" model="#{menuBean.model}"/> 
+ 
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div id="content" class="left_content">
+                    <ui:insert name="content">
+
+                    </ui:insert>
+                </div>
+            </div>
+
+        </div>
+        <h:outputScript name="./js/puntoventa.js"/>
+    </h:body>
+
+</html>
