@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/layouts/usuarioTemplate.xhtml</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/controller/bean/menuBean.java</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/controller/bean/productoBean.java</file>
             <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/login.xhtml</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/controller/bean/authBean.java</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/model/ModelAuth.java</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/model/ModelMarca.java</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/src/java/com/controller/bean/marcaBean.java</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/layouts/adminTemplate.xhtml</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/admin/kardex.xhtml</file>
-            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/resources/theme.css</file>
+            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/forget-password.xhtml</file>
+            <file>file:/C:/Proyectos/Java/proyecto_univesidad-copia/web/register.xhtml</file>
         </group>
     </open-files>
 </project-private>
