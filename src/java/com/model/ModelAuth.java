@@ -10,7 +10,6 @@ import com.complemento.Menu.SubMenu;
 import com.entidad.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

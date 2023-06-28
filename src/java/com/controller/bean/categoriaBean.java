@@ -44,7 +44,7 @@ public class categoriaBean {
 
     public List<Categoria> getListarCategorias() {
         ModelCategoria model = new ModelCategoria();
-        listarCategorias = model.listarCategorias();
+        listarCategorias = model.listarCategorias(this.BaseApi, this.token, this.Username);
         return listarCategorias;
     }
 
