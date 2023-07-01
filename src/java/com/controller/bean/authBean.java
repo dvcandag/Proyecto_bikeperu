@@ -145,14 +145,14 @@ public class authBean implements Serializable{
      */
     public String Redireccionar(String tipo) {
         System.out.println("Tipo: " + tipo);
-        switch (tipo) {
-            case "A":
-                return "admin/dashboard.xhtml?faces-redirect=true";
-            case "U":
-                return "user/dashboard.xhtml?faces-redirect=true";
-            default:
-                return "user/dashboard.xhtml?faces-redirect=true";
-        }
+//        switch (tipo) {
+//            case "A":
+//                return "admin/dashboard.xhtml?faces-redirect=true";
+//            case "U":
+//                return "user/dashboard.xhtml?faces-redirect=true";
+//            default:
+                return "dashboard.xhtml?faces-redirect=true";
+//        }
     }
  
 

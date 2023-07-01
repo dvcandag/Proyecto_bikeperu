@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layouts/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <div class="layout-main"> 
+            <div class="layout-content">
+                <div class="grid">
+                    <div class="col">
+                        <h4>Mantenimiento de precios</h4>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col">
+                        <div class="card"> 
+
+                            <h:form id="formPrecios">
+                                <p:growl id="msgs" showDetail="true" life="5000"/>
+                                <h5>Tipo de Precios / Gastos</h5>
+                                <div class="card"> 
+                                    <p:inputText type="hidden" id="txtIndicador" value="#{preciosBean.tipoRegistro}" /> 
+                                    <p:calendar type="hidden" id="txtFechaRegistro" value="#{preciosBean.mprecio.fecRegistro}"/> 
+                                    <div class="field grid" style="display: none;">
+                                        <p:outputLabel for="txtId" styleClass="col-fixed" style="width:100px" value="Secuencia: "/>
+                                        <div class="col">
+                                            <p:inputNumber
+                                                id="txtId"   
+                                                value="#{preciosBean.mprecio.secuencia}" 
+                                                > 
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="field grid">
+                                        <p:outputLabel for="txtGastoAdministrativo" styleClass="col-fixed" style="width:100px" value="Administrativo: "/>
+                                        <div class="col">
+                                            <p:inputNumber
+                                                id="txtGastoAdministrativo"  
+                                                value="#{preciosBean.mprecio.porAdministrativo}"
+                                                symbol="%"
+                                                symbolPosition="s" 
+                                                required="true"   
+                                                >
+                                                <f:validateLength minimum="1" maximum="100" />
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="field grid">
+                                        <p:outputLabel for="txtUtilidad" styleClass="col-fixed" style="width:100px" value="Utilidad:"/>
+                                        <div class="col">
+                                            <p:inputNumber 
+                                                id="txtUtilidad" 
+                                                value="#{preciosBean.mprecio.porUtilidad}"
+                                                symbol="%"
+                                                symbolPosition="s" 
+                                                required="true"   
+                                                >
+                                                <f:validateLength minimum="1" maximum="100" />
+                                            </p:inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="field grid"> 
+                                        <p:commandButton value="#{preciosBean.textButton}" icon="pi pi-save"  iconPos="right"
+                                                         actionListener="#{preciosBean.guardar()}" styleClass="mr-2"
+                                                         update="formPrecios :formTblPrecios msgs"  
+                                                         />
+                                    </div>
+
+                                </div>
+
+                            </h:form>
+
+                            <h:form id="formTblPrecios">
+
+                                <p:dataTable id="tblPrecios" value="#{preciosBean.listPrecio}" var="precio">
+
+                                    <p:column headerText="Id" width="3%">
+                                        <h:outputText value="#{precio.secuencia}"/>
+                                    </p:column>
+                                    <p:column headerText="Fecha Registro" style="text-align: center">
+                                        <h:outputText value="#{precio.fecRegistro}">
+                                            <f:convertDateTime type="date" pattern="dd/MM/yyyy h:ss" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Fecha Actualizado" style="text-align: center">
+                                        <h:outputText value="#{precio.fecActualizado}">
+                                            <f:convertDateTime type="date" pattern="dd/MM/yyyy h:ss" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="Administrativo" style="text-align: center">
+                                        <h:outputText value="#{precio.porAdministrativo}%"> 
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Utilidad" style="text-align: center"> 
+                                        <h:outputText value="#{precio.porUtilidad}%" > 
+                                        </h:outputText> 
+                                    </p:column>
+
+                                    <p:column headerText="OPC" style="width: 5%; text-align: center">
+                                        <p:commandButton 
+                                            icon="pi pi-pencil" 
+                                            styleClass="rounded-button ui-button-warning mr-2" 
+                                            title="Modificar"
+                                            update=":formPrecios"
+                                            actionListener="#{preciosBean.cambiarTipo}"
+                                            >
+                                            <f:setPropertyActionListener target="#{preciosBean.mprecio}" value="#{precio}" />
+                                        </p:commandButton>  
+                                    </p:column>
+                                </p:dataTable>
+
+                            </h:form>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>

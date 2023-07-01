@@ -7,7 +7,6 @@ package com.controller.bean;
 
 import com.complemento.Configuracion;
 import com.entidad.Categoria;
-import com.entidad.Marca;
 import com.model.ModelCategoria;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -62,7 +61,7 @@ public class categoriaBean {
 
     public void guardarRegistro() {
         ModelCategoria model = new ModelCategoria();
-        model.agregar(categoria);
+        model.agregar(categoria,this.BaseApi, this.token, this.Username);
     }
 
     public void limpiarRegistro() {
@@ -71,13 +70,13 @@ public class categoriaBean {
 
     public void actualizarRegistro() {
         ModelCategoria model = new ModelCategoria();
-        model.modificar(categoria);
+        model.modificar(categoria,this.BaseApi, this.token, this.Username);
         this.limpiarRegistro();
     }
 
     public void eliminarRegistro() {
         ModelCategoria model = new ModelCategoria();
-        model.eliminar(categoria);
+        model.eliminar(categoria,this.BaseApi, this.token, this.Username);
         this.limpiarRegistro();
     }
 }

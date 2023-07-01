@@ -11,13 +11,13 @@ import com.model.ModelMarca;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author efrai
  */
-@ManagedBean(name = "marcaBean")
+@ManagedBean
 @ViewScoped
 
 public class marcaBean implements Serializable{
@@ -32,7 +32,6 @@ public class marcaBean implements Serializable{
     private String token = "";
     private String Username = "";
     private String BaseApi = "";
- 
 
     public marcaBean() {
         marca = new Marca();
@@ -54,11 +53,10 @@ public class marcaBean implements Serializable{
     public Marca getMarca() {
         return marca;
     }
-
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
-
+ 
     public void limpiarMarca() {
         marca = new Marca();
     }

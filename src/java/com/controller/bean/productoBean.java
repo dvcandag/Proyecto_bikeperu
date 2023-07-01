@@ -87,7 +87,7 @@ public class productoBean {
     }
 
     public List<Categoria> getListaCategorias() {
-        listaCategorias = new ModelCategoria().listarCategorias();
+//        listaCategorias = new ModelCategoria().listarCategorias();
         return listaCategorias;
     }
 

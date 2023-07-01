@@ -99,7 +99,7 @@ public class kardexVentasBean {
 
     public List<Categoria> getListCategoria() {
         ModelCategoria model = new ModelCategoria();
-        listCategoria = model.listarCategorias();
+//        listCategoria = model.listarCategorias();
         return listCategoria;
     }
 

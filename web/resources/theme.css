@@ -4860,6 +4860,8 @@ body .ui-menu.ui-menu-toggleable .ui-menu-list .ui-widget-header .ui-icon-triang
   font-weight: normal;
   display: inline-block;
   background: none;
+  float: right;
+  margin: auto;
 }
 body .ui-menu.ui-menu-toggleable .ui-menu-list .ui-widget-header .ui-icon-triangle-1-e:before {
   content: "\e901";
@@ -4870,6 +4872,8 @@ body .ui-menu.ui-menu-toggleable .ui-menu-list .ui-widget-header .ui-icon-triang
   font-weight: normal;
   display: inline-block;
   background: none;
+  float: right;
+  margin: auto;
 }
 body .ui-menu.ui-menu-toggleable .ui-menu-list .ui-widget-header .ui-icon-triangle-1-s:before {
   content: "\e902";
@@ -4881,10 +4885,11 @@ body .ui-menu.ui-menu-toggleable .ui-menu-list .ui-widget-header h3 {
 body .ui-menu .ui-menu-list .ui-widget-header {
   margin: 0;
   width: 100%; 
-  color: #4B576F; 
+  color: #2b394f !important; 
   float: none;
   border: 0 none;
   padding: 0.75rem 1rem;
+  background: #25a4d436 !important;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   border-radius: 0;
 }
@@ -4892,11 +4897,11 @@ body .ui-menu .ui-menu-list .ui-widget-header h3 {
   padding: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: #4B576F;
+  color: #FFFFFF;
   float: none;
 }
 body .ui-menu .ui-menu-list .ui-widget-header.ui-state-hover {
-  /*background: #F1F3F6;*/
+  background: #F1F3F6;
   color: #4B576F;
 }
 body .ui-menu .ui-menu-list .ui-widget-header.ui-state-hover .ui-icon {

@@ -8,7 +8,6 @@ package com.controller.bean;
 import com.entidad.Cliente;
 import com.entidad.Consultarucdni;
 import com.github.lbovolini.mapper.ObjectMapper;
-import com.model.ModelCliente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -168,24 +167,7 @@ public class consultaRucBean {
                 return "https://dniruc.apisperu.com/api/v1/dni/" + consulta.getNumero() + "?token=" + token;
         }
     }
-    public void guardarRegistro(){
-        ModelCliente model = new ModelCliente();
-        model.guardar(cliente);
-        
-    }
     
-    public void modificarRegistro(){
-        
-        ModelCliente model = new ModelCliente();
-        model.actualizar(cliente);
-        this.limpiarCliente();
-    }
-    public void eliminarRegistro(){
-        
-        ModelCliente model = new ModelCliente();
-        model.eliminar(cliente);
-        this.limpiarCliente();
-    }
 
     public Integer getMinChar() {
         return minChar;

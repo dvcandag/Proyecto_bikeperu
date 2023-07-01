@@ -5,11 +5,15 @@
  */
 package com.model;
 
+import com.complemento.ApiRes;
 import com.complemento.ApiResData;
 import com.entidad.Categoria;
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import okhttp3.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -18,6 +22,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
  
 public class ModelCategoria {
+
+    public ModelCategoria() {
+    }
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().
+                addMessage(null, new FacesMessage(severity, summary, detail));
+    }
     public List<Categoria> listarCategorias(String url, String token, String username) {
         ArrayList<Categoria> lista = new ArrayList<>();
         try {
@@ -46,52 +57,101 @@ public class ModelCategoria {
                 return lista;
             }
         } catch (Exception e) {
-        }
-        
-        
+        } 
         return lista;
     }
 
-    public void agregar(Categoria categoria) {
-        Session sesion = null;
-        sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
+    public void agregar(Categoria categoria, String url, String token, String username) {
+        RequestBody body = new FormBody.Builder()
+                .add("Id", "0")
+                .add("Nombre", categoria.getNombre())
+                .add("Descripcion", categoria.getDescripcion())
+                .add("Estado", categoria.getEstado())
+                .build();
         try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url + "marca")
+                    .post(body)
+                    .addHeader("Authorization", String.format("Bearer %s", token))
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("username", username)
+                    .build();
 
-            sesion.save(categoria);
-            sesion.getTransaction().commit();
-        } catch (HibernateException e) {
-            System.out.println(e.getMessage());
-            sesion.getTransaction().rollback();
+            Response response = client.newCall(request).execute();
+            Gson gson = new Gson();
+            String res = response.body().string();
+            ApiRes respons = gson.fromJson(res,  ApiRes.class);
+            if (response.code() == 201) {
+                System.out.println("response: " + response);
+                addMessage(FacesMessage.SEVERITY_INFO, "Exitoso", respons.getBody());
+            } else {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error", respons.getBody());
+            }
+        } catch (IOException e) {
+            addMessage(FacesMessage.SEVERITY_FATAL, "Error fatal", e.getMessage());
         }
-        sesion.close();
     }
 
-    public void modificar(Categoria categoria) {
-        Session sesion = null;
-        sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
+    public void modificar(Categoria categoria, String url, String token, String username) {
+        RequestBody body = new FormBody.Builder()
+                .add("Id", categoria.getId().toString())
+                .add("Nombre", categoria.getNombre())
+                .add("Descripcion", categoria.getDescripcion())
+                .add("Estado", categoria.getEstado())
+                .build();
+        
         try {
-            sesion.update(categoria);
-            sesion.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            sesion.getTransaction().rollback();
-        }
-        sesion.close();
-    }
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url + "marca/"+ categoria.getId())
+                    .put(body)
+                    .addHeader("Authorization", String.format("Bearer %s", token))
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("username", username)
+                    .build();
 
-    public void eliminar(Categoria categoria) {
-        Session sesion = null;
-        sesion = HibernateUtil.getSessionFactory().openSession();
-        sesion.beginTransaction();
-        try {
-            sesion.delete(categoria);
-            sesion.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            sesion.getTransaction().rollback();
+            Response response = client.newCall(request).execute();
+            Gson gson = new Gson();
+            String res = response.body().string();
+            ApiRes respons = gson.fromJson(res,  ApiRes.class);
+            if (response.code() == 200) {
+                System.out.println("response: " + response);
+                addMessage(FacesMessage.SEVERITY_INFO, "Exitoso", respons.getBody());
+            } else {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error", respons.getBody());
+            }
+        } catch (IOException e) {
+            addMessage(FacesMessage.SEVERITY_FATAL, "Error fatal", e.getMessage());
         } 
-        sesion.close();
+    }
+
+    public void eliminar(Categoria categoria, String url, String token, String username) {
+        RequestBody body = new FormBody.Builder()
+                .add("Id", categoria.getId().toString()) 
+                .build();
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url + "marca/"+categoria.getId())
+                    .delete(body)
+                    .addHeader("Authorization", String.format("Bearer %s", token))
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("username", username)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            Gson gson = new Gson();
+            String res = response.body().string();
+            ApiRes respons = gson.fromJson(res,  ApiRes.class);
+            if (response.code() == 200) {
+                System.out.println("response: " + response);
+                addMessage(FacesMessage.SEVERITY_INFO, "Exitoso", respons.getBody());
+            } else {
+                addMessage(FacesMessage.SEVERITY_ERROR, "Error", respons.getBody());
+            }
+        } catch (IOException e) {
+            addMessage(FacesMessage.SEVERITY_FATAL, "Error fatal", e.getMessage());
+        }
     }
 }

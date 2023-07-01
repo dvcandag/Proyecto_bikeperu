@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import okhttp3.FormBody;
@@ -23,9 +22,6 @@ public class ModelMarca {
 
     public ModelMarca() {
     }
-
-    
-
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance().
                 addMessage(null, new FacesMessage(severity, summary, detail));
@@ -107,6 +103,7 @@ public class ModelMarca {
                 .add("Descripcion", marca.getDescripcion())
                 .add("Estado", marca.getEstado())
                 .build();
+        
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()

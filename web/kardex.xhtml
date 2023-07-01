@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./layouts/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+
+        <div class="layout-main"> 
+            <div class="layout-content">
+                <div class="grid">
+                    <div class="col">
+                        <h4>Kardex</h4>
+                    </div>
+                </div>
+                <div class="grid">
+                    <div class="col">  
+
+
+                        <div class="card">
+
+                            <h:form>
+
+
+                                <div class="grid">
+                                    <div class="col-2"> 
+                                        <p:inputText type="date" id="firstname33" value="#{kardexVentasBean.kardexBuscador.fechaInicio}"/>
+                                    </div>
+
+
+                                    <div class="col-2">
+                                        <p:outputLabel for="cmbTipoMovimiento" styleClass="col-fixed" style="width:150px" value="Tipo Movimiento"/>
+                                        <p:selectOneMenu id="cmbTipoMovimiento" value="#{kardexVentasBean.kardexBuscador.tipoMovimiento}">
+                                            <f:selectItems 
+                                                value="#{kardexVentasBean.listTMovimiento}" 
+                                                var="tMovimiento" 
+                                                itemValue="#{tMovimiento.id}" 
+                                                itemLabel="#{tMovimiento.nombre}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <p:outputLabel for="cmbCategoria" styleClass="col-fixed" style="width:150px" value="Categoria"/>
+                                        <p:selectOneMenu id="cmbCategoria" value="#{kardexVentasBean.kardexBuscador.idCategoria}">
+                                            <f:selectItems 
+                                                value="#{kardexVentasBean.listCategoria}" 
+                                                var="cate" 
+                                                itemValue="#{cate.id}" 
+                                                itemLabel="#{cate.nombre}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <p:outputLabel for="cmbMarca" styleClass="col-fixed" style="width:150px" value="Marca"/>
+                                        <p:selectOneMenu id="cmbMarca" value="#{kardexVentasBean.kardexBuscador.idMarca}">
+                                            <f:selectItems 
+                                                value="#{kardexVentasBean.listMarca}" 
+                                                var="marc" 
+                                                itemValue="#{marc.id}" 
+                                                itemLabel="#{marc.nombre}" />
+                                        </p:selectOneMenu>
+
+                                    </div>
+
+                                    <div class="col-1">  
+                                        <p:commandButton 
+                                            value="Buscar" icon="pi pi-search" 
+                                            actionListener="#{kardexVentasBean.buscarconFiltro()}" styleClass="mr-2"
+                                            update=":formListado"  />
+                                    </div>
+
+                                    <div class="col-3" style="text-align: right;">
+
+                                        <p:commandButton value="Excel" icon="pi pi-file-excel" styleClass="ui-button ui-button-text-only ui-button-success">
+                                            <p:dataExporter type="xls" target="tblKardexVentas" fileName="Reporte Kardex"/>
+                                        </p:commandButton>
+
+
+
+                                    </div>                                 
+                                </div> 
+
+
+
+                            </h:form>
+
+
+                            <h:form id="formListado">
+                                <p:dataTable 
+                                    value="#{kardexVentasBean.listKventas}" 
+                                    paginator="true" paginatorPosition="bottom"
+                                    rows="10"
+                                    id="tblKardexVentas"
+                                    showGridlines="true"
+                                    styleClass="ui-datatable-gridlines ui-datatable-striped ui-datatable-sm"
+                                    selectionMode="multiple"
+                                    rowKey="#{kardexses[0].secuencia}"
+                                    var="kardexses">
+
+                                    <p:column headerText="Sec." width="3%" style="text-align: right;">
+                                        <h:outputText value="#{kardexses[0].secuencia}" />
+                                    </p:column>                                     
+                                    <p:column headerText="Tipo Mov." width="6%" style="text-align: center;">
+                                        <h:outputText value="#{(kardexses[0].idTipoMov == 3)?'Ingreso':((kardexses[0].idTipoMov == '1')) ? 'Ventas' : ''}" />
+                                    </p:column>
+
+                                    <p:column headerText="Producto" width="30%">
+                                        <h:outputText value="#{kardexses[0].producto.codpro} - #{kardexses[0].producto.descripcion}" />
+                                    </p:column>
+
+                                    <p:column headerText="S. Inicial" style="width: 7%; text-align: right;">
+                                        <h:outputText style="text-align: right;" value="#{kardexses[0].stkini}" />
+                                    </p:column>
+
+                                    <p:column headerText="S. Ingreso" style="width: 7%; text-align: right;">
+                                        <h:outputText value="#{kardexses[0].stkmov}" />
+                                    </p:column>
+
+                                    <p:column headerText="S. Final" style="width: 7%; text-align: right;">
+                                        <h:outputText value="#{kardexses[0].stkfin}" />
+                                    </p:column>
+
+                                    <p:column headerText="F. Registro" style="text-align: center;">
+                                        <h:outputText value="#{kardexses[0].fechaRegistro}">
+                                            <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="P. Compra" style="text-align: right;">
+                                        <h:outputText value="#{kardexses[0].precioCompra}" />
+                                    </p:column>
+
+                                    <p:column headerText="P. Venta" style="text-align: right;">
+                                        <h:outputText value="#{kardexses[0].precioVenta}" />
+                                    </p:column>
+
+                                </p:dataTable>
+
+                           </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ui:define>
+
+</ui:composition>
