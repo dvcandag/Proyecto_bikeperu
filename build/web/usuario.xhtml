@@ -16,10 +16,84 @@
             <div class="layout-content">
                 <div class="grid">
                     <div class="col">
-                        <h4>Mantenimiento de usuarios</h4>
+                       <h4>Mantenimiento de usuarios</h4>
                     </div>
                 </div>
-            </div>
-            </div>
+                <div class="grid">
+                    <div class="col">
+                        <div class="card"> 
+
+                             <div class="col">
+                                
+                                <div class="login-card">
+                                    <h:form id="formRegisterUser" >
+                                        <p:growl id="growl" showDetail="true" life="5000"/>
+                                        <span>Todos los campos son requeridos <strong>*</strong></span>
+                                        <br/><br/>
+                                        <div class="form-group">
+                                            <span>Tipo de usuario *</span>
+                                            <br/>
+                                            <h:selectOneMenu id="selectTipoUsuario" 
+                                                             value="#{usuarioBean.user.rol.id}" 
+                                                             requiredMessage="El tipo de usuario es requerido" required="true">
+                                                <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                                                <f:selectItems value="#{rolBean.listaRoles}" 
+                                                               var="rol" 
+                                                               itemValue="#{rol.id}" 
+                                                               itemLabel="#{rol.nombreRol}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                            <span>Nombres*</span>
+                                            <br/>                                          
+                                            <h:inputText autocomplete="on" 
+                                                         value="#{usuarioBean.user.nombre}"
+                                                         id="txtNombres" 
+                                                         requiredMessage="El campo nombres es requerido" required="true"
+                                                         class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" /> 
+                                        </div>
+                                        <div class="form-group">
+                                            <span>Apellidos *</span>
+                                            <br/>
+                                            <h:inputText autocomplete="on" 
+                                                         id="txtApellidos"
+                                                         value="#{usuarioBean.user.apellidos}"
+                                                         requiredMessage="El campo apellido es requerido" required="true"
+                                                         class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" /> 
+                                        </div>
+                                        <div class="form-group">
+                                            <span>E-mail *</span>
+                                            <br/>        
+                                            <h:inputText autocomplete="on" 
+                                                         id="txtUsuario"
+                                                         value="#{usuarioBean.user.email}"
+                                                         requiredMessage="El campo E-mail es obligatorio" required="true"
+                                                         class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" /> 
+                                        </div>
+                                        <div class="form-group">
+                                            <span>Contraseña *</span>
+                                            <br/>
+                                            <h:inputText autocomplete="on" 
+                                                         id="txtPassword" 
+                                                         value="#{usuarioBean.user.password}"
+                                                         requiredMessage="El campo contraseña es obligatorio" required="true"
+                                                         class="ui-password ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" > 
+                                                 />
+                                            </h:inputText>
+                                        </div>
+                                        <br/>
+                                        <p:commandButton action="#{usuarioBean.registrarUsuario()}" type="submit"
+                                        update="growl" value="Registrar" iconPos="right" icon="pi pi-sign-in" style="width: 10rem" />
+                                    </h:form>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+        </div>
     </ui:define>
+
 </ui:composition>

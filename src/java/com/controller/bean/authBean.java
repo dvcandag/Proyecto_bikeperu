@@ -33,7 +33,7 @@ import javax.servlet.http.Cookie;
 public class authBean implements Serializable{
 
     Configuracion conf; 
-    private final String BaseApi = "http://localhost:5100/api/";
+    private String BaseApi = "";
     private Usuario usuario;
     private Rol rol;
     private Pagina pagina;
@@ -45,9 +45,12 @@ public class authBean implements Serializable{
         usuario = new Usuario();
         rol = new Rol();
         pagina = new Pagina();
+        //usuario.setEmail("vende2@gmail.com");
+        //usuario.setPassword("123");
 
-//        this.conf = new Configuracion(); 
-//        this.BaseApi = this.conf.getBaseApi(); 
+        this.conf = new Configuracion(); 
+        this.BaseApi= this.conf.getBaseApi();
+      //  this.BaseApi = this.conf.getBaseApi(); 
     }
 
     public Usuario getUsuario() {
@@ -82,6 +85,7 @@ public class authBean implements Serializable{
         ModelAuth model = new ModelAuth();
         String urlRedirect = "";
         try {
+            System.out.println("Error: iniciando peticion" );
             String response = model.Login(usuario, this.BaseApi);
 
             if (!response.isEmpty()) {
@@ -109,10 +113,7 @@ public class authBean implements Serializable{
                     FacesContext context = FacesContext.getCurrentInstance();
                     usuarios.setRol(roles);
 
-                    Cookie miCookie = new Cookie("token", res.getBody());
-                    miCookie.setDomain("http://localhost:8084/proyecto_univesidad_copia/");
-                    miCookie.setPath("http://localhost:8084/proyecto_univesidad_copia/");
-                    miCookie.setComment("Cookies de prueba");
+                   
 
                     context.getExternalContext().getSessionMap().put("session_usuario", usuarios);
                     context.getExternalContext().getSessionMap().put("token", res.getBody());

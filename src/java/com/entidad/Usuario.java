@@ -30,12 +30,14 @@ public class Usuario  implements java.io.Serializable {
      private Integer id;
      private Rol rol;
      private String nombre;
+     private String apellidos;
      private String email;
      private String password;
      private String estado;
      private Set usuarioseries = new HashSet(0);
 
     public Usuario() {
+        rol=new Rol();
     }
 
 	
@@ -46,6 +48,15 @@ public class Usuario  implements java.io.Serializable {
     public Usuario(Rol rol, String nombre, String email, String password, String estado, Set usuarioseries) {
        this.rol = rol;
        this.nombre = nombre;
+       this.email = email;
+       this.password = password;
+       this.estado = estado;
+       this.usuarioseries = usuarioseries;
+    }
+    public Usuario(Rol rol, String nombre, String apellidos, String email, String password, String estado, Set usuarioseries) {
+       this.rol = rol;
+       this.nombre = nombre;
+       this.apellidos = apellidos;
        this.email = email;
        this.password = password;
        this.estado = estado;
@@ -82,6 +93,15 @@ public class Usuario  implements java.io.Serializable {
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Column(name="apellidos", length=100)
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     

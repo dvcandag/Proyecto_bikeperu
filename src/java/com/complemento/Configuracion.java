@@ -15,7 +15,7 @@ import javax.faces.context.FacesContext;
  */
 public class Configuracion {
 
-    private final String baseApi = "http://localhost:5100/api/";
+    private final String baseApi = "https://apisbikeperu.onrender.com/api/";
     private final String usename = "";
     private final String token = "";
     private final Integer UserId = 0;

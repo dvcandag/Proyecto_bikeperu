@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class Rol  implements java.io.Serializable {
 
 
-     private Integer id;
+     private Integer id=0;
      private String nombreRol;
      private String flgEstado;
      private String tipRol;

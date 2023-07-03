@@ -11,6 +11,7 @@ import com.entidad.Usuario;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -33,7 +34,11 @@ public class ModelAuth {
                     .add("email", usuario.getEmail())
                     .add("password", usuario.getPassword())
                     .build();
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .build();
             Request request = new Request.Builder()
                     .url(url + "auth/signin")
                     .post(body)
@@ -45,7 +50,9 @@ public class ModelAuth {
             if (response.code() == 200) {
                 lista = res;
             }
+            
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
         }
         return lista;
